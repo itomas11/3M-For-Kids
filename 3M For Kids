@@ -1,0 +1,748 @@
+CODIGO FUENTE DE SOFTWARE EDUCATIVO 3M FOR KIDS
+3M For Kids es un software educativo que biene a apoyar la enseñanza-aprendizaje del idioma Ingles para niños de primer ciclo de educacion basica de manera interactiva mediante videos educativos y ejercicios en forma de juegos.
+
+Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos
+
+3M For Kids es software libre: usted puede redistribuirlo y / o modificarlo bajo los términos de la Licencia Pública General GNU publicada por la Fundación para el Software Libre, ya sea la versión 3 de la Licencia, o (A su elección) cualquier versión posterior.
+
+3M For Kids se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de     COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulte la GNU General Public License para más detalles.
+
+Debería haber recibido una copia de la Licencia Pública General de GNU junto con este programa. Si no es así, consulte <http://www.gnu.org/licenses/gpl.html>
+
+php
+	session_start();
+	session_destroy();
+	header("location: index.php");
+>
+//El código anterior permite cerrar sesión.
+
+php
+session_start();
+	if(isset($_POST["correo"])){
+		$c=$_POST["correo"];
+		$a=$_POST["pass"];
+		$conn=mysql_connect("localhost","root","");
+		mysql_select_db("ingles");
+		$r=mysql_query("select * from usuarios where usuario='".addslashes($c)."' and clave='".addslashes($a)."'");
+		if(mysql_num_rows($r)>0){
+			$_SESSION["usuario"]=$c;
+			$_SESSION["nombre"]=mysql_result($r,0,"nombre");
+			echo "<script>window.location='index1.php';</script>";
+		}else{
+			echo "<script>window.location='index.php?e2';</script>";
+		}
+	}
+//El código anterior permite verificar usuario y contraseña para iniciar sesión.
+
+html
+	<head><title>Bienvenidos</title>
+	<script type="text/javascript">
+	function validar(){
+		if(document.getElementById("nombre").value!="" && document.getElementById("usuario").value !="" && document.getElementById("clave").value != "" && document.getElementById("clave2").value !=""){		if(document.getElementById("clave").value==document.getElementById("clave2").value){
+				return true;
+			}else{
+				alert("Las contraseÃ±as no coinciden.");
+				return false;
+			}
+		}else{
+		alert("Llene todos los campos del formulario.");
+		return false;
+		}
+	}
+	function validar2(){
+		if(document.getElementById("a").value!="" && document.getElementById("b").value !=""){
+			return true;
+		}else{
+			alert("llene todos los campos del formulario.");
+			return false;
+		}
+	}
+	</script>
+	</head>
+	<body leftmargin=0 topmargin=0 background="imgs/fondo.png">
+		<table border=0 width=100% height=100% cellspacing=0 cellpadding=0>
+			<tr bgcolor=black height=40><td><img src='imgs/titulo.png'></td>
+			<td width=400>
+				<form action="iniciar.php" method="post" onsubmit="return validar2();">
+				<font color="white" size=2 family=arial>
+				Usuario: <input type="text" name="correo" id="a" style="width:100px"> Contrase&ntilde;a: <input type="password" id="b" name="pass" style="width:100px"><input type=submit value="Iniciar">
+				</font></form>
+			</td>
+			</tr>
+			<tr><td>
+			<?php
+			if(isset($_GET["b"])){
+			echo "<center><div style='background-color:white;width:350px'><font color='blue' size=10>SU REGISTRO<br>HA SIDO<br>COMPLETADO</font></div></center>";
+			}
+			if(isset($_GET["e"])){
+			echo "<center><div style='background-color:white;width:350px'><font color='red' size=10>EL CORREO<br>YA ESTA<br>REGISTRADO<br>INTENTE NUEVAMENTE</font></div></center>";
+			}
+			if(isset($_GET["e1"])){
+			echo "<center><div style='background-color:white;width:350px'><font color='red' size=10>SE GENERO<br>UN ERROR.<br>INTENTE NUEVAMENTE</font></div></center>";
+			}
+			if(isset($_GET["e2"])){
+			echo "<center><div style='background-color:white;width:350px'><font color='red' size=10>EL USUARIO NO HA<br>SIDO ENCONTRADO.<br>INTENTE NUEVAMENTE</font></div></center>";
+			}
+			?>
+			</td><td width=400><div>
+			<form action='registro.php' method="POST" onsubmit="return validar();">
+				<table border=0 bgcolor=lightblue cellspacing=5 cellpadding=5 style="font-family:Arial;font-size:16px">
+				<tr bgcolor=blue><td colspan=2 align=center>REGISTRO DE USUARIOS</td></tr>
+				<tr><td>Nombre</td><td><input type="text" name="nombre" id="nombre"></td></tr>
+				<tr><td>Usuario</td><td><input type="text" name="usuario" id="usuario"></td></tr>
+				<tr><td>Contrase&ntilde;a</td><td><input type="password" name="clave" id="clave"></td></tr>
+				<tr><td>Repetir Contrase&ntilde;a</td><td><input type="password" name="clave2" id="clave2"></td></tr>
+				<tr><td colspan=2 align=center><input type="submit" value="Registrar"><input type="reset" value="Limpiar"></td></tr>
+				</table>
+			</form>
+			</div></td></tr>
+		</table>
+<center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
+Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a><br>
+center>
+body>
+html>
+// El código anterior permite visualizar la pantalla inicial del software educativo, donde se encuentra el formulario de registro y formulario de ingreso o inicio de sesión.
+
+php
+session_start();
+if(!isset($_SESSION["usuario"])){
+echo "<script>window.location='index.php';</script>";
+}
+?>
+<html>
+<body leftmargin=0 topmargin=0 bottommargin=0 rightmargin=0 style="overflow:hidden">
+<BGSOUND SRC="carbonerito.mid">
+<img src="imgs/fondo.png" width=100% height=100% style="position:absolute;left:0px;top:0px">
+<div style="width:100%;position:absolute">
+<center>
+<?php
+echo "<div height=40 style='border:solid red 3px;background-color:white;width:300px;'><h2>Welcome ".$_SESSION["nombre"]."<br></h2></div>";
+?>
+<img src="imgs/UNO.gif" style=""><br><br>
+<img src="imgs/lessons.gif" style="width:300px" onmouseover="this.src='imgs/lessonso.gif';this.style.cursor='hand'" onmouseout="this.src='imgs/lessons.gif'" onclick="window.location='menu_uno.html';"><br>
+<img src="imgs/help.gif" style="width:300px" onmouseover="this.src='imgs/helpo.gif';this.style.cursor='hand'" onmouseout="this.src='imgs/help.gif'" 
+onclick="window.location='tutorial.html';"><br>
+<img src="imgs/salir.gif" style="width:300px" onmouseover="this.src='imgs/salir2.gif';this.style.cursor='hand'" onmouseout="this.src='imgs/salir.gif'" onclick="window.location='cerrar.php';">
+<br>
+</center>
+<br><br><br><br><br>
+<center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
+Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a>
+</center>
+</div>
+body>
+html>
+// El código anterior permite desplegar el menú principal del software en donde aperece tres opciones lecciones, ayuda y salir.
+
+php
+session_start();
+if(isset($_SESSION["usuario"])){
+	$u=$_SESSION["usuario"];
+	$e=$_GET["e"];
+	$l=$_GET["l"];
+	$con=mysql_connect("localhost","root","");
+	mysql_select_db("ingles",$con);
+	$r2=mysql_query("select * from partidas where usuario='".$u."' and juego='".$e."' and leccion='".$l."'",$con);
+	if(mysql_num_rows($r2)>0){
+		$r1=mysql_query("select count(puntaje),sum(puntaje) from partidas where usuario='$u' and juego='$e' and leccion='$l'",$con);
+		$r3=mysql_query("select * from partidas where usuario='$u' and juego='$e' and leccion='$l'",$con);
+		echo "Numero de Partidas: ".mysql_result($r1,0,0)."<br>Puntaje: ".mysql_result($r1,0,1)."<br>Nota Anterior: ".mysql_result($r3,mysql_num_rows($r3)-1,"puntaje");
+	}else{
+		echo "Numero de Partidas: 0<br>Puntaje: 0<br>Nota Anterior: 0";
+	}
+}else{
+	header("location: index.php");
+}
+>
+// El código anterior muestra el puntaje obtenido en los ejercicios, muestra los contadores que están junto al video correspondiente para cada lección.
+
+php
+session_start();
+if(!isset($_SESSION["usuario"])){
+echo "<script>window.location='index.php';</script>";
+}else{
+	$c=$_SESSION["usuario"];
+	$j=$_GET["juego"];
+	$p=$_GET["puntaje"];
+	$l=$_GET["leccion"];
+	$conn=mysql_connect("localhost","root","");
+	mysql_select_db("ingles");
+	if(!mysql_query("insert into partidas values('$c','$j','$p','$l')")){
+		echo "ERROR AL ALMACENAR LOS DATOS";
+	}
+}
+>
+//El código anterior almacena los datos de las partidas jugadas por usuario, puntaje, lección y juego.
+
+php
+	if(isset($_POST["nombre"])){
+		$n=$_POST["nombre"];
+		$u=$_POST["usuario"];
+		$c=$_POST["clave"];
+		$conn=mysql_connect("localhost","root","");
+		mysql_select_db("ingles");
+		$b=mysql_query("select * from usuarios where usuario='$u'");
+		if(mysql_num_rows($b)>0){
+			echo "<script>window.location='index.php?e';</script>";
+		}else{
+			if(!mysql_query("insert into usuarios values('$u','$n','$c')",$conn)){
+				echo "<script>window.location='index.php?e1';</script>";
+			}else{
+				echo "<script>window.location='index.php?b';</script>";
+			}
+		}
+	}
+>
+//El código anterior permite registrar al usuario y guardar los datos que se le piden en el formulario de registro.
+
+html>
+head>
+style>
+	section {
+		max-width:950px;
+	}
+	section article{
+		display:inline-block;
+	}
+</style>
+</head>
+<body leftmargin=0 topmargin=0 bottommargin=0 rightmargin=0>
+<BGSOUND SRC="carbonerito.mid">
+<img src="imgs/fondo.png" width=100% height=100% style="position:absolute;left:0px;top:0px">
+<div style="width:100%;position:absolute">
+<center>
+<img src="imgs/UNO.gif" style=""><br>
+<section>
+<article><img src="imgs/aa.gif" width=300 onclick="window.location='VIDEOS/a.html';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></article>
+<article><img src="imgs/bb.gif" width=300 onclick="window.location='VIDEOS/b.html';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></article>
+<article><img src="imgs/cc.gif" width=300 onclick="window.location='VIDEOS/c.html';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></article>
+<article><img src="imgs/dd.gif" width=300 onclick="window.location='VIDEOS/d.html';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></article>
+<article><img src="imgs/ee.gif" width=300 onclick="window.location='VIDEOS/e.html';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></article>
+<article><img src="imgs/ff.gif" width=300 onclick="window.location='VIDEOS/g.html';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></article>
+<article><img src="imgs/gg.gif" width=300 onclick="window.location='VIDEOS/f.html';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></article>
+<article><img src="imgs/hh.gif" width=300 onclick="window.location='VIDEOS/h.html';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></article>
+<article><img src="imgs/ii.gif" width=300 onclick="window.location='index1.php';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></article>
+</section>
+</center>
+<br><br><br><br><br>
+<center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
+Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a>
+</center>
+div>
+body>
+tml>
+//El código anterior muestra nueve botones, cada uno correspondiente a cada lección.
+
+html
+hea>
+head
+<body leftmargin=0 topmargin=0 bottommargin=0 rightmargin=0 style="overflow:hidden">
+<BGSOUND SRC="carbonerito.mid">
+<img src="fondo.png" width=100% height=100% style="position:absolute;left:0px;top:0px">
+<div style="width:100%;position:absolute">
+<center>
+<img src="UNO.gif" style=""><br>
+<table cellpadding=30>
+<tr>
+	<td><img src="aa.gif" width=300 onclick="window.location='quiz/body.htm';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></td>
+	<td><img src="bb.gif" width=300 onclick="window.location='quiz/family.htm';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></td>
+	<td><img src="cc.gif" width=300 onclick="window.location='VIDEOS/c.html';" onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></td>
+</tr>
+<tr>
+	<td><img src="dd.gif" width=300 onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></td>
+	<td><img src="ee.gif" width=300 onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></td>
+	<td><img src="ff.gif" width=300 onmouseover="this.style.border='5px solid red';this.style.cursor='hand';" onmouseout="this.style.border='';"></td>
+</tr>
+</table>
+</center>
+div>
+body>
+html>
+//El código anterior muestra un efectivo al pasar el puntero por encima de las imágenes correspondientes a cada unidad, esto permite que el contorno del menú cambie de color y solo sea necesario hacer una vez clic para ingresar a ese menú.
+
+html>
+head>
+body leftmargin=0 topmargin=0 bottommargin=0 rightmargin=0 style="overflow:hidden">
+<img src="imgs/fondo.png" width=100% height=100% style="position:absolute;left:0px;top:0px">
+<div style="width:100%;position:absolute">
+<center>
+<table border=0>
+<tr><td colspan=2 style="font-family:arial"><b>
+<br><br>
+<center>
+VIDEO TUTORIAL DEL SOFTWARE EDUCATIVO "3M FOR KIDS"
+</center>
+<br>
+</td></tr>
+<tr><td>
+<object id="MediaPlayer" width="600" height="575" classid="CLSID:22D6F312-B0F6-11D0-94AB-0… codebase="http://activex.microsoft.com/a… standby="Loading Media Player" type="application/x-oleobject">
+<param name="FileName" value="softwareducativo.mp4">
+<param name="AutoStart" value="true">
+<param name="ShowControls" value="true">
+<param name="ShowStatusBar" value="true">
+<param name="DisplaySize" value="4">
+<embed type="application/x-mplayer2" pluginspage="" src="softwareducativo.mp4" width="650" height="600" autostart="1" ShowStatusBar="1" ShowControls="1" DisplaySize="4" ></embed>
+</object>
+</td>
+<tr>
+<td><center><a href="index1.php"><img src="imgs/back.png"></a></center></td>
+</tr>
+</tr>
+</table>
+</center>
+<center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
+Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a><br>
+</center>
+div>
+ody>
+html>
+//El código anterior muestra el video de ayuda para el uso del software educativo.
+
+
+!DOCTYPE html>
+html>
+head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Practice My Body</title>
+<link rel="stylesheet" type="text/css" href="./js/style.css">
+<link rel="stylesheet" href="css.css">
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+var correctas = 0;
+var cantidad = 0;
+$( init );
+function init() {
+  $('#successMessage').hide();
+  $('#successMessage').css( {
+    left: '580px',
+    top: '250px',
+    width: 0,
+    height: 0
+  } );
+  correctas = 0;
+cantidad= 0;
+  $('#cardPile').html( '' );
+  //$('#cardSlots').html( '' );
+  var numbers = [ 'Arms', 'Eyes', 'Feet', 'Fingers', 'Hands', 'Head', 'Legs', 'Mouth', 'Nose', 'Tummy' ];
+  numbers.sort( function() { return Math.random() - .5 } );
+  for ( var i=0; i<10; i++ ) {
+    $('<div>' + numbers[i] + '</div>').data( 'number', numbers[i] ).attr( 'id', 'card'+numbers[i] ).appendTo( '#cardPile' ).draggable( {
+      containment: '#content',
+      stack: '#cardPile div',
+      cursor: 'move',
+      revert: true
+    } );
+  }
+/*.draggable( {
+      containment: '#content',
+      stack: '#cardPile div',
+      cursor: 'move',
+      revert: true
+    } );*/
+$('.ui-droppable').droppable( {
+      accept: '#cardPile div',
+      hoverClass: 'hovered',
+      drop: handleCardDrop
+    } );
+}
+function handleCardDrop( event, ui ) {
+  var slotNumber = $(this).data( 'number' );
+  var cardNumber = ui.draggable.data( 'number' );
+    ui.draggable.addClass( 'correct' );
+    ui.draggable.draggable( 'disable' );
+    $(this).droppable( 'disable' );
+    ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+    ui.draggable.draggable( 'option', 'revert', false );
+    cantidad++;
+  if ($(this).attr( 'number' )==cardNumber) {
+    correctas++;
+	}
+  if ( cantidad == 10 ) {
+	if( correctas== 10 ){
+	$('#texto').html('<center><h3>FELICIDADES OBTUVISTE TODAS LAS RESPUESTAS CORRECTAS</h3></center>');
+	}else{
+	$('#texto').html('<center><h3>OBTUVISTES '+correctas+' RESPUESTAS CORRECTAS</h3></center>');
+	}
+	$("#bbb").load("../partidas.php?juego=1&leccion=1&puntaje="+correctas);
+    $('#successMessage').show();
+    $('#successMessage').animate( {
+      left: '380px',
+      top: '200px',
+      width: '400px',
+      height: '100px',
+      opacity: 1
+    } );
+  }
+}
+</script>
+</head>
+<body style="cursor: auto;" bgcolor='lightgray'>
+<div id="content">	
+	<center>
+	<table border=0 width=800>
+	<tr><td>
+	<table border=0 width=100%>
+	<tr style="font-family:arial"><td ><img src='../VIDEOS/a.gif' id="enca"></td>
+	<td><b>Objetivo:</b> Reconocer en ingl&eacute;s el nombre de las partes del cuerpo humano.<br>
+	<b>Indicaciones:</b>
+Ahora que ya conoces el nombre de las partes del cuerpo humano, haz click en las palabras que estÃ¡n a tu izquierda y sin soltarla arrÃ¡strala y suÃ©ltala debajo de la imagen correcta.
+</td><td><a href="../VIDEOS/a.html"><img src="../imgs/back.png"></a></td></tr>
+	</td></tr>
+	<tr>
+	<td>
+	<div id="cardPile">
+	</div>
+	</td>
+	<td>
+	<div id="cardSlots">
+	<center>
+	<table style='text-align:center'>
+	<tr>
+		<td><img src='body/1.png' width=100  height=125></td>
+		<td><img src='body/2.png' width=100 height=125></td>
+		<td><img src='body/3.png' width=100 height=125></td>
+		<td><img src='body/4.png' width=100 height=125></td>
+		<td><img src='body/5.png' width=100 height=125></td>
+	</tr>
+	<tr>
+		<td><div number='Arms' class="ui-droppable" id='res0'>Soltar Aqui</div></td>
+		<td><div number='Eyes' class="ui-droppable" id='res1'>Soltar Aqui</div></td>
+		<td><div number='Feet' class="ui-droppable" id='res2'>Soltar Aqui</div></td>
+		<td><div number='Fingers' class="ui-droppable" id='res3'>Soltar Aqui</div></td>
+		<td><div number='Hands' class="ui-droppable" id='res4'>Soltar Aqui</div></td>
+	</tr>
+	<tr>
+		<td><img src='body/6.png' width=100  height=125></td>
+		<td><img src='body/7.png' width=100 height=125></td>
+		<td><img src='body/8.png' width=100 height=125></td>
+		<td><img src='body/9.png' width=100 height=125></td>
+		<td><img src='body/10.png' width=100 height=125></td>
+	</tr>
+	<tr>
+		<td><div number='Head' class="ui-droppable" id='res5'>Soltar Aqui</div></td>
+		<td><div number='Legs' class="ui-droppable" id='res6'>Soltar Aqui</div></td>
+		<td><div number='Mouth' class="ui-droppable" id='res7'>Soltar Aqui</div></td>
+		<td><div number='Nose' class="ui-droppable" id='res8'>Soltar Aqui</div></td>
+		<td><div number='Tummy' class="ui-droppable" id='res9'>Soltar Aqui</div></td>
+	</tr>
+	</table>
+	</center>
+	</td>
+	</tr>
+	</table>
+	</div>
+	</center>
+	<div id="successMessage" style="display: none; left: 580px; top: 250px; width: 0px; height: 0px; opacity: 1;">
+		<div id="texto"><h2>Muy Bien!</h2></div>
+		<button onclick="init()">Jugar Nuevamente</button>
+	</div>
+
+<br>
+<center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
+Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a>
+</center>
+</div>
+div id="bbb" style="display:none"></div>
+body>
+html>
+//El código anterior pertenece al ejercicio 1 de la unidad 1 que se trata de arrastrar las palabras de una lista ubicada a la izquierda hacia una serie de imágenes ordenadas que están a la derecha y colocar la palabra en la imagen correspondiente a esta palabra.
+//NOTA: Es importante saber que para cada ejercicio 1 de las ocho unidades diferentes se usa la misma lógica lo único que cambia para estos ejercicios es el contenido que corresponde a las 8 unidades diferentes desarrolladas en el software educativo.
+
+enca {
+	width:150px;
+	height:75px;
+}
+//El código anterior pertenece a la hoja de estilo que controla la configuraciones de las paginas correspondientes al ejercicio 1 con el que cuenta cada unidad. 
+DOCTYPE html>
+html>
+head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Practice My Body</title>
+<link rel="stylesheet" type="text/css" href="./js/style.css">
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/jquery-ui.min.js"></script>
+<script type="text/javascript">
+var correctas = 0;
+var cantidad = 0;
+var primera="";
+var segunda = "";
+var seguir = 1;
+$( init );
+function init() {
+  $('#successMessage').hide();
+  $('#successMessage').css( {
+    left: '580px',
+    top: '250px',
+    width: 0,
+    height: 0
+  } );
+  correctas = 0;
+cantidad= 0;
+  $('#cardPile').html( '' );
+  var numbers = [ 'Arms', 'Eyes', 'Feet', 'Fingers', 'Hands', 'Head', 'Legs', 'Mouth', 'Nose', 'Tummy' ];
+  numbers.sort( function() { return Math.random() - .5 } );
+  var t = 0;
+  var todo = "";
+  document.write("<body bgcolor='lightgray'>");
+  document.write("<center>");
+  document.write("<table border=0 style='font-family:arial'><tr><td><img src='../VIDEOS/a.gif' width=200 height=50></td><td>");
+  document.write("<b>Objetivo:</b> Reconocer en ingl&eacute;s el nombre de las partes del cuerpo humano.<br><b>Indicaciones:</b> Da click en las cartas y adivina la imagen y la palabra correcta<br>del nombre de las partes del cuerpo humano. ");
+  document.write("</td><td><a href='../VIDEOS/a.html'><img src='../imgs/back.png'></a></td></tr></table>");
+  for ( var i=0; i<10; i++ ) {
+      document.write("<img src='carta.png' width=97 height=132 id='a" + i + "' txt='" + numbers[i] + "' tipo=1 onclick=\"ver('a" + i + "');\">");
+   if((t+1)==8 || (t+1)==16 || (t+1)==24 || (t+1)==32){document.write("<br>");}
+   t++;
+  }
+  numbers.sort( function() { return Math.random() - .5 } );
+  for (var i = 0; i < 10; i++) {
+      document.write("<img src='carta.png' width=97 height=132 id='b" + i + "' txt='" + numbers[i] + "' tipo=2 onclick=\"ver('b" + i + "');\">");
+      if ((t + 1) == 8 || (t + 1) == 16 || (t + 1) == 24 || (t + 1) == 32) { document.write("<br>"); }
+      t++;
+  }
+  document.write("<div id='bbb' style='display:none'></div>");
+  //$('#contenido').html("dfd");
+}
+function ver(x){
+        if(primera==""){
+            if ($('#' + x).attr('src') == "carta.png") {
+                if(seguir==1){ 
+                primera=x;              document.getElementById(x).src="body/"+$('#'+x).attr( 'txt' )+$('#'+x).attr( 'tipo' )+".png";
+                }
+               }
+        }else{
+        if ($('#' + x).attr('src') == "carta.png") {
+            if (seguir == 1) {
+                document.getElementById(x).src = "body/" + $('#' + x).attr('txt') + $('#' + x).attr('tipo') + ".png";
+                segunda = x;
+                seguir = 0;
+                setTimeout("verificar()", 2000);
+            }
+                }
+        }
+}
+function verificar(){        if($('#'+primera).attr('txt')==$('#'+segunda).attr('txt')){
+                correctas++;
+                if(correctas==10){                $("#bbb").load("../partidas.php?juego=2&leccion=1&puntaje="+correctas);
+                    alert("Felicidades!!! Ganaste!!!");
+                    window.location = "body.htm";
+                }
+        }else{                document.getElementById(primera).src="carta.png";                document.getElementById(segunda).src="carta.png";
+        }
+        primera="";
+        segunda = "";
+        seguir = 1;
+}
+function handleCardDrop( event, ui ) {
+  var slotNumber = $(this).data( 'number' );
+  var cardNumber = ui.draggable.data( 'number' );
+    ui.draggable.addClass( 'correct' );
+    ui.draggable.draggable( 'disable' );
+    $(this).droppable( 'disable' );
+    ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+    ui.draggable.draggable( 'option', 'revert', false );
+    cantidad++;
+  if ($(this).attr( 'number' )==cardNumber) {
+    correctas++;
+	}
+  if ( cantidad == 10 ) {
+	if( correctas== 10 ){
+	$('#texto').html('<center><h3>FELICIDADES OBTUVISTE TODAS LAS RESPUESTAS CORRECTAS</h3></center>');
+	}else{
+	$('#texto').html('<center><h3>OBTUVISTES '+correctas+' RESPUESTAS CORRECTAS</h3></center>');
+	}        $("#bbb").load("../partidas.php?juego=2&leccion=1&puntaje="+correctas);
+    $('#successMessage').show();
+    $('#successMessage').animate( {
+      left: '380px',
+      top: '200px',
+      width: '400px',
+      height: '100px',
+      opacity: 1
+    } );
+  }
+}
+</script>
+</head>
+<!--<body style="cursor: auto;overflow:hidden" bgcolor='lightgray'>
+<div id="content">	
+	<center>
+	<img src='../VIDEOS/b.gif' width='200' height='90'>
+	<div id="contenido"></div>
+	</center>
+	<div id="successMessage" style="display: none; left: 580px; top: 250px; width: 0px; height: 0px; opacity: 1;">
+		<div id="texto"><h2>Muy Bien!</h2></div>
+		<button onclick="init()">Jugar Nuevamente</button>
+	</div>
+<br>
+<center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
+Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a>
+</center>
+</div>-->
+bodyhtml>
+//El código anterior pertenece al ejercicio 2 de la unidad 1 que se trata de destapar una serie de cartas, luego buscar en ellas una imagen y la palabra correspondiente a esa imagen o viceversa.
+
+//NOTA: Es importante saber que igual al ejercicio 1, para cada ejercicio 2 de las ocho unidades diferentes se usa la misma lógica lo único que cambia para estos ejercicios es el contenido que corresponde a las 8 unidades diferentes desarrolladas en el software educativo.
+
+content {
+  text-align: center;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+cardSlots {
+  margin: 50px auto 50px auto;
+  background: #ddf;
+}
+/* The initial pile of unsorted cards */
+cardPile {
+  margin: 50px auto 50px auto;
+   background: #ffd;
+}
+#cardSlots{
+  width: 100%;
+  height: 430px;
+  padding: 20px;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+}
+#cardPile {
+  width: 70%;
+  height:430px;
+  padding: 20px;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+}
+/* Individual cards and slots */
+#cardSlots div, #cardPile div {
+  float: left;
+  width: 85px;
+  height: 25px;
+  padding: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0 0 0 10px;
+  background: #fff;
+}
+#cardSlots div:first-child, #cardPile div:first-child {
+  margin-left: 0;
+}
+#cardSlots div.hovered {
+  background: #aaa;
+}
+#cardSlots div {
+  border-style: dashed;
+}
+#cardPile div {
+  background: #666;
+  color: #fff;
+  font-size: 20px;
+}
+#cardPile div.ui-draggable-dragging {
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+}
+/* Individually coloured cards */
+div.correct { background: red; }
+/* "You did it!" message */
+#successMessage {
+  position: absolute;
+  left: 580px;
+  top: 250px;
+  width: 0;
+  height: 0;
+  z-index: 100;
+  background: #dfd;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  box-shadow: .3em .3em .5em rgba(0, 0, 0, .8);
+  padding: 20px;
+}
+//El código anterior pertenece a la hoja de estilo que controla las configuración de las páginas del ejercicio 2.
+
+html>
+head>
+<link rel="stylesheet" href="css.css">
+<script type="text/javascript" src="../jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$("#c1").load("../mostrar.php?l=1&e=1");
+$("#c2").load("../mostrar.php?l=1&e=2");
+}
+);
+</script>
+</head>
+<body leftmargin=0 topmargin=0 bottommargin=0 rightmargin=0 style="overflow:hidden">
+<img src="../imgs/fondo.png" width=100% height=100% style="position:absolute;left:0px;top:0px">
+<div style="width:100%;position:absolute">
+<center>
+<table border=0>
+<tr><td colspan=2>
+<table border=0 width=100%>
+<tr><td><img src="a.gif" id="enca"></td><td><font face="arial"><b>Objetivo de la Unidad:<br></b>Conocer en ingl&eacute;s el nombre de las partes del cuerpo humano.</font></td></tr>
+</table>
+</td></tr>
+<tr><td colspan=2> <font face="arial"><b>Indicaciones para video:</b><br>Presta atención al video para que puedas conocer la pronunciación y escritura en ingl&eacute;s <br>de las partes del cuerpo humano.</font>
+</td></tr>
+<tr><td>
+<object id="MediaPlayer" classid="CLSID:22D6F312-B0F6-11D0-94AB-0… codebase="http://activex.microsoft.com/a… standby="Loading Media Player" type="application/x-oleobject">
+<param name="FileName" value="a.mp4">
+<param name="AutoStart" value="true">
+<param name="ShowControls" value="true">
+<param name="ShowStatusBar" value="true">
+<param name="DisplaySize" value="4">
+<embed type="application/x-mplayer2" pluginspage="" src="a.mp4"  autostart="1" ShowStatusBar="1" ShowControls="1" DisplaySize="4" ></embed>
+</object>
+</td>
+<td valign="top" width=200 bgcolor="lightgray">
+<center>
+<h1>EXERCISE</h1>
+<hr>
+<A HREF="../quiz/body.htm"><h3>Game 1</h3></A>
+<h5><div id="c1"></div></h5>
+<A HREF="../quiz2/body.htm"><h3>Game 2</h3></A>
+<h5><div id="c2"></div></h5>
+<hr><button onclick="window.location='../menu_uno.html';">MENU</button>
+</center>
+</td>
+</tr></table>
+</center>
+<br><br><br><br><br><br><br><br>
+<center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
+Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a>
+</center>
+div>
+body>
+html>
+//El código anterior muestra el video educativo que se reproduce al abrir este menú, en este sección también se encuentra un menú al lado derecho del video que contiene los link a los 2 ejercicios propuestos para las 8 unidad, como una estadística de cuantas veces el usuario a realizado estos juegos, ultima nota obtenida y una suma de las notas obtenidos por el usuario. 
+
+enca {
+	width:150px;
+	height:50px;
+}
+embed {
+	width:480px;
+	height:360px;
+}
+button {
+	width:100%;
+	height:40px;
+}
+//El código anterior pertenece a la hoja de estilo que controla la configuración de las paginas en donde se encuentran los 8 videos espondientes a cada una de las unidad del software educativo.</font>
