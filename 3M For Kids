@@ -1,5 +1,5 @@
 CODIGO FUENTE DE SOFTWARE EDUCATIVO 3M FOR KIDS
-3M For Kids es un software educativo que biene a apoyar la enseñanza-aprendizaje del idioma Ingles para niños de primer ciclo de educacion basica de manera interactiva mediante videos educativos y ejercicios en forma de juegos.
+<!-- 3M For Kids es un software educativo que biene a apoyar la enseñanza-aprendizaje del idioma Ingles para niños de primer ciclo de educacion basica de manera interactiva mediante videos educativos y ejercicios en forma de juegos.
 
 Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos
 
@@ -7,16 +7,16 @@ Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rin
 
 3M For Kids se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA, incluso sin la garantía implícita de     COMERCIALIZACIÓN o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Consulte la GNU General Public License para más detalles.
 
-Debería haber recibido una copia de la Licencia Pública General de GNU junto con este programa. Si no es así, consulte <http://www.gnu.org/licenses/gpl.html>
+Debería haber recibido una copia de la Licencia Pública General de GNU junto con este programa. Si no es así, consulte <http://www.gnu.org/licenses/gpl.html>.-->
 
-php
+<?php
 	session_start();
 	session_destroy();
 	header("location: index.php");
->
+?>
 //El código anterior permite cerrar sesión.
 
-php
+<?php
 session_start();
 	if(isset($_POST["correo"])){
 		$c=$_POST["correo"];
@@ -32,9 +32,10 @@ session_start();
 			echo "<script>window.location='index.php?e2';</script>";
 		}
 	}
+?>
 //El código anterior permite verificar usuario y contraseña para iniciar sesión.
 
-html
+<html>
 	<head><title>Bienvenidos</title>
 	<script type="text/javascript">
 	function validar(){
@@ -99,12 +100,12 @@ html
 		</table>
 <center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
 Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a><br>
-center>
-body>
-html>
+</center>
+	</body>
+</html>
 // El código anterior permite visualizar la pantalla inicial del software educativo, donde se encuentra el formulario de registro y formulario de ingreso o inicio de sesión.
 
-php
+<?php
 session_start();
 if(!isset($_SESSION["usuario"])){
 echo "<script>window.location='index.php';</script>";
@@ -131,11 +132,11 @@ onclick="window.location='tutorial.html';"><br>
 Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a>
 </center>
 </div>
-body>
-html>
+</body>
+</html>
 // El código anterior permite desplegar el menú principal del software en donde aperece tres opciones lecciones, ayuda y salir.
 
-php
+<?php
 session_start();
 if(isset($_SESSION["usuario"])){
 	$u=$_SESSION["usuario"];
@@ -154,10 +155,10 @@ if(isset($_SESSION["usuario"])){
 }else{
 	header("location: index.php");
 }
->
+?>
 // El código anterior muestra el puntaje obtenido en los ejercicios, muestra los contadores que están junto al video correspondiente para cada lección.
 
-php
+<?php
 session_start();
 if(!isset($_SESSION["usuario"])){
 echo "<script>window.location='index.php';</script>";
@@ -172,10 +173,10 @@ echo "<script>window.location='index.php';</script>";
 		echo "ERROR AL ALMACENAR LOS DATOS";
 	}
 }
->
+?>
 //El código anterior almacena los datos de las partidas jugadas por usuario, puntaje, lección y juego.
 
-php
+<?php
 	if(isset($_POST["nombre"])){
 		$n=$_POST["nombre"];
 		$u=$_POST["usuario"];
@@ -193,12 +194,12 @@ php
 			}
 		}
 	}
->
+?>
 //El código anterior permite registrar al usuario y guardar los datos que se le piden en el formulario de registro.
 
-html>
-head>
-style>
+<html>
+<head>
+<style>
 	section {
 		max-width:950px;
 	}
@@ -229,14 +230,14 @@ style>
 <center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
 Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a>
 </center>
-div>
-body>
-tml>
+</div>
+</body>
+</html>
 //El código anterior muestra nueve botones, cada uno correspondiente a cada lección.
 
-html
-hea>
-head
+<html>
+<head>
+</head>
 <body leftmargin=0 topmargin=0 bottommargin=0 rightmargin=0 style="overflow:hidden">
 <BGSOUND SRC="carbonerito.mid">
 <img src="fondo.png" width=100% height=100% style="position:absolute;left:0px;top:0px">
@@ -256,14 +257,14 @@ head
 </tr>
 </table>
 </center>
-div>
-body>
-html>
+</div>
+</body>
+</html>
 //El código anterior muestra un efectivo al pasar el puntero por encima de las imágenes correspondientes a cada unidad, esto permite que el contorno del menú cambie de color y solo sea necesario hacer una vez clic para ingresar a ese menú.
 
-html>
-head>
-body leftmargin=0 topmargin=0 bottommargin=0 rightmargin=0 style="overflow:hidden">
+<html>
+<head>
+<body leftmargin=0 topmargin=0 bottommargin=0 rightmargin=0 style="overflow:hidden">
 <img src="imgs/fondo.png" width=100% height=100% style="position:absolute;left:0px;top:0px">
 <div style="width:100%;position:absolute">
 <center>
@@ -294,15 +295,15 @@ VIDEO TUTORIAL DEL SOFTWARE EDUCATIVO "3M FOR KIDS"
 <center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
 Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a><br>
 </center>
-div>
-ody>
-html>
+</div>
+</body>
+</html>
 //El código anterior muestra el video de ayuda para el uso del software educativo.
 
 
-!DOCTYPE html>
-html>
-head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Practice My Body</title>
 <link rel="stylesheet" type="text/css" href="./js/style.css">
 <link rel="stylesheet" href="css.css">
@@ -443,20 +444,20 @@ Ahora que ya conoces el nombre de las partes del cuerpo humano, haz click en las
 Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a>
 </center>
 </div>
-div id="bbb" style="display:none"></div>
-body>
-html>
+<div id="bbb" style="display:none"></div>
+</body>
+</html>
 //El código anterior pertenece al ejercicio 1 de la unidad 1 que se trata de arrastrar las palabras de una lista ubicada a la izquierda hacia una serie de imágenes ordenadas que están a la derecha y colocar la palabra en la imagen correspondiente a esta palabra.
 //NOTA: Es importante saber que para cada ejercicio 1 de las ocho unidades diferentes se usa la misma lógica lo único que cambia para estos ejercicios es el contenido que corresponde a las 8 unidades diferentes desarrolladas en el software educativo.
 
-enca {
+#enca {
 	width:150px;
 	height:75px;
 }
 //El código anterior pertenece a la hoja de estilo que controla la configuraciones de las paginas correspondientes al ejercicio 1 con el que cuenta cada unidad. 
-DOCTYPE html>
-html>
-head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Practice My Body</title>
 <link rel="stylesheet" type="text/css" href="./js/style.css">
 <script type="text/javascript" src="./js/jquery.min.js"></script>
@@ -577,23 +578,23 @@ function handleCardDrop( event, ui ) {
 Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a>
 </center>
 </div>-->
-bodyhtml>
+</body></html>
 //El código anterior pertenece al ejercicio 2 de la unidad 1 que se trata de destapar una serie de cartas, luego buscar en ellas una imagen y la palabra correspondiente a esa imagen o viceversa.
 
 //NOTA: Es importante saber que igual al ejercicio 1, para cada ejercicio 2 de las ocho unidades diferentes se usa la misma lógica lo único que cambia para estos ejercicios es el contenido que corresponde a las 8 unidades diferentes desarrolladas en el software educativo.
 
-content {
+#content {
   text-align: center;
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
 }
-cardSlots {
+#cardSlots {
   margin: 50px auto 50px auto;
   background: #ddf;
 }
 /* The initial pile of unsorted cards */
-cardPile {
+#cardPile {
   margin: 50px auto 50px auto;
    background: #ffd;
 }
@@ -677,8 +678,8 @@ div.correct { background: red; }
 }
 //El código anterior pertenece a la hoja de estilo que controla las configuración de las páginas del ejercicio 2.
 
-html>
-head>
+<html>
+<head>
 <link rel="stylesheet" href="css.css">
 <script type="text/javascript" src="../jquery.min.js"></script>
 <script type="text/javascript">
@@ -728,12 +729,12 @@ $("#c2").load("../mostrar.php?l=1&e=2");
 <center>Copyright (C) 2013 Isaias Tomas Carranza Mejia, Jose Cristian Molina Aldana, Rino Argelio Melendez Santos<br>
 Bajo licencia GNU GPL V3 <a href="http://www.gnu.org/licenses/gpl.html" target="blank">Terminos y condiciones</a>
 </center>
-div>
-body>
-html>
+</div>
+</body>
+</html>
 //El código anterior muestra el video educativo que se reproduce al abrir este menú, en este sección también se encuentra un menú al lado derecho del video que contiene los link a los 2 ejercicios propuestos para las 8 unidad, como una estadística de cuantas veces el usuario a realizado estos juegos, ultima nota obtenida y una suma de las notas obtenidos por el usuario. 
 
-enca {
+#enca {
 	width:150px;
 	height:50px;
 }
@@ -745,4 +746,4 @@ button {
 	width:100%;
 	height:40px;
 }
-//El código anterior pertenece a la hoja de estilo que controla la configuración de las paginas en donde se encuentran los 8 videos espondientes a cada una de las unidad del software educativo.</font>
+//El código anterior pertenece a la hoja de estilo que controla la configuración de las paginas en donde se encuentran los 8 videos correspondientes a cada una de las unidad del software educativo.</font>
